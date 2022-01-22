@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StatusBar, StyleSheet, Text, View } from 'react-native'
 
 const PriceArea = () => {
     return (
-        <View>
+        <View style={styles.container}>
             <Text>Hello From PriceArea</Text>
         </View>
     )
@@ -10,4 +10,11 @@ const PriceArea = () => {
 
 export default PriceArea
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        marginTop: StatusBar.currentHeight,
+    },
+
+});

@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import { StyleSheet, Text, View } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
@@ -8,22 +9,47 @@ import PriceArea from "./src/Components/Navigations/Home/PriceArea";
 import LoginArea from "./src/Components/Navigations/Login/LoginArea";
 import SignupArea from "./src/Components/Navigations/Login/SignupArea";
 
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import CustomDrawer from "./src/Components/CustomDrawer";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+
 export default function App() {
   const Stack = createNativeStackNavigator();
+  const Drawer = createDrawerNavigator();
+
+  const HomePageDrawer = () => {
+    return (
+      <Drawer.Navigator
+        initialRouteName="Home"
+        screenOptions={{ headerTitle: "", headerShadowVisible: false }}
+        drawerContent={(props) => <CustomDrawer {...props} />}
+      >
+        <Drawer.Screen
+          name="Home"
+          component={HomePage}
+          options={{
+            drawerIcon: () => {
+              return <FontAwesome5 name="car" size={20} />;
+            },
+          }}
+        />
+      </Drawer.Navigator>
+    );
+  };
   return (
     <SafeAreaProvider>
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Home"
+            initialRouteName="Homepage"
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen
-              name="Home"
-              component={HomePage}
+              name="Homepage"
+              component={HomePageDrawer}
               options={{ headerShown: false }}
             />
             <Stack.Screen name="Search" component={MapArea} />
