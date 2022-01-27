@@ -8,11 +8,12 @@ const MainScreenBtns = (props) => {
     const handlePress = () => {
         navigation.navigate("Search")
     }
-    return (<TouchableOpacity style={tw`w-1/2 h-full p-2 `} onPress={handlePress}>
+    return (<TouchableOpacity style={tw`w-1/2 h-full p-2`} onPress={handlePress}>
         <ImageBackground source={{ uri: props.uri }} style={styles.imageBackground} resizeMode="contain">
             <Text style={{ fontSize: 20, marginTop: 10 }}>{props.name}</Text>
             <FontAwesome name='chevron-circle-right' size={60} style={tw`mb-1`} />
         </ImageBackground>
+
     </TouchableOpacity>)
 }
 const HomePage = () => {
@@ -42,8 +43,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "white",
         justifyContent: "center",
-        elevation: 6,
         borderRadius: 15,
+        borderWidth: 1,
         alignItems: "center",
         justifyContent: "space-between"
     }
