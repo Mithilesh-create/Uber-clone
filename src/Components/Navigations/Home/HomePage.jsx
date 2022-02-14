@@ -2,10 +2,15 @@ import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from
 import tw from 'tailwind-react-native-classnames';
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { setType } from '../../../../StateSlice/ServiceType';
+import CustomMiddleware from '../../CustomMiddleware';
 
 const MainScreenBtns = (props) => {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     const handlePress = () => {
+        dispatch(setType({ CabType: props.type }))
         navigation.navigate("Search")
     }
     return (<TouchableOpacity style={tw`w-1/2 h-full p-2`} onPress={handlePress}>
@@ -18,18 +23,20 @@ const MainScreenBtns = (props) => {
 }
 const HomePage = () => {
     return (
-        <View style={styles.container} >
-            <View style={tw`w-44 h-32`}>
-                <Image source={{ uri: "https://bit.ly/33MuJLn" }} resizeMode='cover' style={tw`w-full h-full`} />
-            </View>
-            <View style={tw`w-full h-64 mt-3 flex flex-row items-center justify-between`}>
+        <CustomMiddleware>
+            <View style={styles.container} >
+                <View style={tw`w-44 h-32`}>
+                    <Image source={{ uri: "https://bit.ly/33MuJLn" }} resizeMode='cover' style={tw`w-full h-full`} />
+                </View>
+                <View style={tw`w-full h-64 mt-3 flex flex-row items-center justify-between`}>
 
-                <MainScreenBtns uri="https://bit.ly/33YmDzJ" name="Get a ride" />
-                {/* "" */}
-                <MainScreenBtns uri="https://bit.ly/3fLw2NJ" name="Intercity" />
+                    <MainScreenBtns uri="https://bit.ly/33YmDzJ" name="Get a ride" type="Normal Ride" />
+                    {/* "" */}
+                    <MainScreenBtns uri="https://bit.ly/3fLw2NJ" name="Intercity" type="Intercity Ride" />
 
+                </View>
             </View>
-        </View>
+        </CustomMiddleware>
     )
 }
 

@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import exampleReducer from "../StateSlice/ExampleSlice"
+import LocationAddressReducer from "../StateSlice/LocationSlice"
+import CabTypeReducer from "../StateSlice/ServiceType"
 export const store = configureStore({
   reducer: {
-    ExampleValues: exampleReducer,
+    LocationAddress: LocationAddressReducer,
+    ServiceType: CabTypeReducer,
+
   },
 });

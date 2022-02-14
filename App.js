@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
 import BookedArea from "./src/Components/Navigations/Home/BookedArea";
