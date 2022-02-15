@@ -1,12 +1,21 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from 'firebase/firestore'; 
+import { getFirestore } from "firebase/firestore";
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  PROJECT_ID,
+  STORAGE_BUCKET,
+  SENDER_ID,
+  APP_ID,
+} from "@env";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCvcskopnkIj6j9HdhK1WLR7OHcxbrhgLg",
-  authDomain: "uber-clone-e9a70.firebaseapp.com",
-  projectId: "uber-clone-e9a70",
-  storageBucket: "uber-clone-e9a70.appspot.com",
-  messagingSenderId: "736545551621",
-  appId: "1:736545551621:web:4cd7b1e23ac5cd91fe336c"
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: SENDER_ID,
+  appId: APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);

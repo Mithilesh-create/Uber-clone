@@ -5,7 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { setType } from '../../../../StateSlice/ServiceType';
 import CustomMiddleware from '../../CustomMiddleware';
-
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../Data/firebase';
+import { useEffect } from 'react';
+import { ENV_VAR } from "@env"
 const MainScreenBtns = (props) => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -22,6 +25,18 @@ const MainScreenBtns = (props) => {
     </TouchableOpacity>)
 }
 const HomePage = () => {
+    const getUserCollection = collection(db, `/Users/SPWjnGbrkdXasXwDbvgB/Cab booking`)
+
+    useEffect(() => {
+        const getDataFunc = async () => {
+            const fetchingData = await getDocs(getUserCollection)
+            const valueData = fetchingData.docs.map((e) => ({ ...e.data(), id: e.id }))
+            console.log(valueData);
+            console.log(ENV_VAR);
+        }
+        getDataFunc();
+    }, [])
+
     return (
         <CustomMiddleware>
             <View style={styles.container} >

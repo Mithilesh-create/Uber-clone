@@ -15,7 +15,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import CustomDrawer from "./src/Components/CustomDrawer";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { LogBox } from 'react-native';
 
+LogBox.ignoreLogs(['Setting a timer']);
 export default function App() {
   const Stack = createNativeStackNavigator();
   const Drawer = createDrawerNavigator();

@@ -8,8 +8,8 @@ import CustomSearchList from '../../CustomSearchList';
 import { useDispatch } from 'react-redux';
 import { setEndLoc, setStartLoc } from '../../../../StateSlice/LocationSlice';
 import CustomMiddleware from '../../CustomMiddleware';
+import { TOKEN } from "@env";
 const MapArea = () => {
-    const Token = "pk.eyJ1IjoibWl0aGlsZXNoMzAwIiwiYSI6ImNreWtjbDJnZzBmdGUyb3VmZ2Z1cm5zOHoifQ.m_QXZVaUJH1zNpi41aee4Q"
     const [ShowSearch, setShowSearch] = useState("");
     const [FormData, setFormData] = useState({
         StartLocation: "",
@@ -20,7 +20,7 @@ const MapArea = () => {
     const [ErrorMsg, setError] = useState({})
     const [LocationList, setLocationList] = useState([])
     const FetchSearch = async (Search) => {
-        const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${Search}.json?types=place%2Cpostcode%2Caddress&access_token=${Token}`)
+        const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${Search}.json?types=place%2Cpostcode%2Caddress&access_token=${TOKEN}`)
         const result = await res.json();
         setLocationList(result.features)
     }
