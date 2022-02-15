@@ -4,8 +4,11 @@ import CustomItemTile from "../../CustomItemTile";
 import { RidesData } from "../../Data/data"
 import tw from 'tailwind-react-native-classnames';
 import { useNavigation } from "@react-navigation/native";
+import CustomMiddleware from '../../CustomMiddleware';
+
 function PriceArea(props) {
     const navigation = useNavigation();
+    const randomOtp = Math.ceil(Math.random() * 100000);
     const RenderItem = (data) => {
         const handlePress = () => {
             navigation.navigate("Booked")

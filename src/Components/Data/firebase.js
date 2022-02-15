@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-
+import { getFirestore } from 'firebase/firestore'; 
 const firebaseConfig = {
   apiKey: "AIzaSyCvcskopnkIj6j9HdhK1WLR7OHcxbrhgLg",
   authDomain: "uber-clone-e9a70.firebaseapp.com",
@@ -10,3 +10,4 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);

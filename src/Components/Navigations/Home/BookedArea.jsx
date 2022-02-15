@@ -13,27 +13,42 @@ const Loading = () => {
         </View>
     )
 }
-
+const randomOtp = Math.ceil(Math.random() * (99999 - 10000)) + 10000;
 const SuccessMessage = () => {
     return (
         <CustomMiddleware>
-
             <View style={styles.successContainer}>
-                <View style={tw`w-80 h-80 rounded-full overflow-hidden`}>
+                <View style={tw`w-56 h-56 rounded-full overflow-hidden`}>
                     <Image source={{ uri: "https://thumbs.gfycat.com/QuaintLikelyFlyingfish-size_restricted.gif" }} resizeMode="cover" style={tw`w-full h-full`} />
                 </View>
+
                 <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
                     <View style={{ height: "15%", width: "100%", }}>
                         <Text style={tw`font-bold text-2xl text-center`}>Congratulations! Your ride is confirmed.</Text>
                     </View>
+
                     <View style={{ height: "30%", alignItems: "center", justifyContent: "center" }}>
                         <View style={tw`w-14 h-14 rounded-full overflow-hidden border`}>
                             <Image source={{ uri: "https://cdn.pixabay.com/photo/2015/03/04/22/35/head-659652_960_720.png" }} resizeMode="cover" style={tw`w-full h-full`} />
                         </View>
                         <View>
-                            <Text style={tw`font-bold text-lg my-2 text-center`}>You are riding with Mithilesh Sharma</Text>
+                            <Text style={tw`font-bold my-2 text-lg text-center`}>You are riding with Mithilesh Sharma</Text>
                         </View>
                     </View>
+                    <TouchableOpacity style={tw`h-24 p-2 items-center justify-center`}>
+                        <Shadow distance={15}>
+                            <View style={{
+                                width: "100%", height: "100%", borderRadius: 25, backgroundColor: "#98FF98", flexDirection: "row",
+                            }}>
+
+                                <View style={{ width: "50%", justifyContent: "center", marginLeft: 2 }}>
+                                    <Text style={tw`text-lg font-bold text-center text-black`}>{randomOtp}</Text>
+                                    <Text style={tw`text-xs mt-1 text-gray-700 text-center`}>Start OTP</Text>
+                                </View>
+                            </View>
+                        </Shadow>
+                    </TouchableOpacity>
+
                     <TouchableOpacity style={tw`h-28 mt-2 p-2 items-center justify-center`}>
                         <Shadow distance={15}>
                             <View style={{
@@ -57,6 +72,44 @@ const SuccessMessage = () => {
                             </View>
                         </Shadow>
                     </TouchableOpacity>
+
+                </View>
+            </View>
+        </CustomMiddleware>
+    )
+}
+const ErrorMessage = () => {
+    return (
+        <CustomMiddleware>
+            <View style={styles.successContainer}>
+                <View style={tw`w-80 h-80 rounded-full overflow-hidden`}>
+                    <Image source={{ uri: "https://cdn.dribbble.com/users/2469324/screenshots/6538803/comp_3.gif" }} resizeMode="cover" style={tw`w-full h-full`} />
+                </View>
+
+                <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
+                    <View style={{ height: "15%", width: "100%", }}>
+                        <Text style={tw`font-bold text-2xl text-center`}>Sorry! but you have already booked one ride</Text>
+                    </View>
+
+                    <View style={{ height: "30%", alignItems: "center", justifyContent: "center" }}>
+                        
+                        <View>
+                            <Text style={tw`font-bold my-2 text-lg text-center`}>Please complete your previous journey to book again</Text>
+                        </View>
+                    </View>
+                    <TouchableOpacity style={tw`h-24 p-2 items-center justify-center`}>
+                        <Shadow distance={15}>
+                            <View style={{
+                                width: "100%", height: "100%", borderRadius: 25, backgroundColor: "#9f98ff", flexDirection: "row",
+                            }}>
+
+                                <View style={{ width: "50%", justifyContent: "center", marginLeft: 2 }}>
+                                    <Text style={tw`text-lg font-bold text-center text-white`}>GO BACK</Text>
+                                </View>
+                            </View>
+                        </Shadow>
+                    </TouchableOpacity>
+
                 </View>
             </View>
         </CustomMiddleware>
@@ -71,7 +124,7 @@ const BookedArea = () => {
     }, []);
 
     return (
-        LoadedData ? <SuccessMessage /> : <Loading />
+        LoadedData ? <ErrorMessage /> : <Loading />
     )
 }
 
