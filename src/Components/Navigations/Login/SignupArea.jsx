@@ -11,7 +11,9 @@ import {
 } from "react-native";
 import CustomButton from "../../CustomButton";
 import CustomInputText from "../../CustomInputText";
-
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from "../../Data/firebase";
+import bcrypt from "react-native-bcrypt"
 const SignupArea = () => {
   const navigation = useNavigation();
   const [ErrorMsg, setError] = useState({});
@@ -28,14 +30,18 @@ const SignupArea = () => {
       setError((prev) => {
         return { ...prev, [name]: null };
       });
-    }else{
+    } else {
       setError((prev) => {
         return { ...prev, [name]: "This field is required" };
       });
     }
   };
   const [showData, setshowData] = useState(true);
-  const handlePress = () => {
+
+  const getUserCollectionRef = collection(db, `/Users`)
+
+
+  const handlePress = async () => {
     if (!FormData.userName) {
       setError((prev) => {
         return { ...prev, userName: "Please enter Username" };
@@ -61,13 +67,28 @@ const SignupArea = () => {
         return { ...prev, password: "Please enter min 6 length Password" };
       });
     }
-    setFormData({
-      userName: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-    });
+    try {
+      const salt = bcrypt.genSaltSync(10)
+      var hashedPassword = bcrypt.hashSync(FormData.password, salt);
+      await addDoc(getUserCollectionRef, {
+        Username: FormData.userName,
+        Email: FormData.email,
+        Firstname: FormData.firstName,
+        Lastname: FormData.lastName,
+        Password: hashedPassword,
+      })
+      navigation.navigate("Login")
+      setFormData({
+        userName: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
   };
   return (
     <ScrollView style={styles.root}>

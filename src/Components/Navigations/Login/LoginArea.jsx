@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   StyleSheet,
@@ -9,8 +9,14 @@ import {
   TouchableOpacity,
   StatusBar,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { setAuthType } from "../../../../StateSlice/AuthState";
 import CustomButton from "../../CustomButton";
 import CustomInputText from "../../CustomInputText";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../Data/firebase";
+import bcrypt from "react-native-bcrypt"
 
 const LoginArea = () => {
   const navigation = useNavigation();
@@ -20,33 +26,68 @@ const LoginArea = () => {
   });
   const [ErrorMsg, setError] = useState({})
   const [showData, setshowData] = useState(true);
+  const dispatch = useDispatch();
   const onChangeHandler = (name, value) => {
     setFormData({ ...FormData, [name]: value });
     if (value !== "") {
       setError((prev) => {
         return { ...prev, [name]: null };
       });
-    }else{
+    } else {
       setError((prev) => {
         return { ...prev, [name]: "This field is required" };
       });
     }
   };
-  const handlePress = () => {
-    if (!FormData.userName) {
-      setError((prev) => {
-        return { ...prev, userName: "Please enter correct Username" };
-      });
+  const getDataDB = async () => {
+    const getUserCollection = collection(db, `/Users`)
+    const fetchingData = await getDocs(getUserCollection)
+    const valueData = fetchingData.docs.map((e) => ({ ...e.data(), id: e.id }))
+    return valueData;
+  }
+
+  const handlePress = async () => {
+    try {
+      if (!FormData.userName) {
+        setError((prev) => {
+          return { ...prev, userName: "Please enter correct Username" };
+        });
+        return
+      }
+      if (!FormData.password || FormData.password.length < 6) {
+        setError((prev) => {
+          return { ...prev, password: "Please enter correct Password" };
+        });
+        return
+      }
+      const FireData = await getDataDB();
+      let ValueFire = {}
+      FireData.map((e) => {
+        if (FormData.userName == e.Username) {
+          ValueFire = e;
+        }
+      })
+
+      var hashedPassword = bcrypt.compareSync(FormData.password, ValueFire?.Password);
+      if (hashedPassword) {
+        dispatch(setAuthType({
+          AuthVal: true
+        }))
+        await AsyncStorage.setItem('Auth', ValueFire)
+        setFormData({
+          userName: "",
+          password: "",
+        });
+      } else {
+        setError((prev) => {
+          return { ...prev, password: "Please enter correct Password" };
+        });
+        return
+      }
+
+    } catch (e) {
+      console.log(e);
     }
-    if (!FormData.password || FormData.password.length < 6) {
-      setError((prev) => {
-        return { ...prev, password: "Please enter correct Password" };
-      });
-    }
-    setFormData({
-      userName: "",
-      password: "",
-    });
   };
   return (
     <ScrollView style={styles.root}>
@@ -92,7 +133,7 @@ const LoginArea = () => {
             onPressIcon={() => {
               setshowData(!showData);
             }}
-            iconStyle={{color: "dodgerblue"}}
+            iconStyle={{ color: "dodgerblue" }}
             error={ErrorMsg.password}
           />
         </View>

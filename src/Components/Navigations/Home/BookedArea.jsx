@@ -92,7 +92,7 @@ const ErrorMessage = () => {
                     </View>
 
                     <View style={{ height: "30%", alignItems: "center", justifyContent: "center" }}>
-                        
+
                         <View>
                             <Text style={tw`font-bold my-2 text-lg text-center`}>Please complete your previous journey to book again</Text>
                         </View>
@@ -124,7 +124,7 @@ const BookedArea = () => {
     }, []);
 
     return (
-        LoadedData ? <ErrorMessage /> : <Loading />
+        LoadedData ? <SuccessMessage /> : <Loading />
     )
 }
 
