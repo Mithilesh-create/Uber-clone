@@ -19,17 +19,17 @@ const RootNav = () => {
   const Stack = createNativeStackNavigator();
   const Drawer = createDrawerNavigator();
   const dispatch = useDispatch();
-    const checkAuth = async () => {
-        const AuthValue = await AsyncStorage.getItem('Auth')
-        if (AuthValue) {
-            dispatch(setAuthType({
-                AuthVal: true
-            }))
-        }
+  const checkAuth = async () => {
+    const AuthValue = await AsyncStorage.getItem('Auth')
+    if (AuthValue) {
+      dispatch(setAuthType({
+        AuthVal: true
+      }))
     }
-    useEffect(() => {
-        checkAuth();
-    }, [])
+  }
+  useEffect(() => {
+    checkAuth();
+  }, [])
   const HomePageDrawer = () => {
     return (
       <Drawer.Navigator

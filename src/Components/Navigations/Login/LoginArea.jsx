@@ -73,7 +73,7 @@ const LoginArea = () => {
         dispatch(setAuthType({
           AuthVal: true
         }))
-        await AsyncStorage.setItem('Auth', ValueFire)
+        await AsyncStorage.setItem('Auth', JSON.stringify(ValueFire))
         setFormData({
           userName: "",
           password: "",

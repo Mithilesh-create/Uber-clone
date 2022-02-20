@@ -1,5 +1,4 @@
 import { DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
     View,
@@ -13,6 +12,8 @@ import { StatusBar } from "react-native";
 import { setAuthType } from "../../StateSlice/AuthState";
 import { useDispatch } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from "react";
+import { useState } from "react";
 
 const CustomDrawer = (props) => {
     const dispatch = useDispatch();
@@ -26,13 +27,23 @@ const CustomDrawer = (props) => {
             console.log(error);
         }
     }
+    const [UserName, setUserName] = useState()
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            const userData = await AsyncStorage.getItem('Auth')
+            const userNameInfo = JSON.parse(userData)
+            setUserName(userNameInfo.Username)
+        }
+        fetchUserInfo();
+    }, [])
+
     return (
         <View style={styles.container}>
             <View style={styles.profileArea}>
                 <View style={tw`w-24 h-24 rounded-full bg-white overflow-hidden border`}>
                     <Image source={{ uri: "https://bit.ly/3AzyyQA" }} resizeMode="contain" style={tw`w-full h-full`} />
                 </View>
-                <Text style={tw`text-xl font-bold mt-3`}>Manoj Saini</Text>
+                <Text style={tw`text-xl font-bold mt-3`}>{UserName}</Text>
             </View>
             <DrawerContentScrollView {...props} style={{ marginTop: -30 }}>
                 <DrawerItemList {...props} />

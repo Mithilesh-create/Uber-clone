@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import CustomButton from "../../CustomButton";
 import CustomInputText from "../../CustomInputText";
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from "../../Data/firebase";
 import bcrypt from "react-native-bcrypt"
 const SignupArea = () => {
@@ -76,6 +76,7 @@ const SignupArea = () => {
         Firstname: FormData.firstName,
         Lastname: FormData.lastName,
         Password: hashedPassword,
+        createdAt: serverTimestamp(),
       })
       navigation.navigate("Login")
       setFormData({
