@@ -1,4 +1,5 @@
 import React from "react";
+import { ActivityIndicator } from "react-native";
 import {
   View,
   Text,
@@ -13,7 +14,10 @@ const CustomButton = (props) => {
       onPress={props.onSubmitData}
     >
       <View style={styles.buttonView}>
-        <Text style={{ color: "white" }}>{props.label}</Text>
+        {props.onLoading ?
+          <ActivityIndicator size="small" color="#fff" /> :
+          <Text style={{ color: "white" }}>{props.label}</Text>
+        }
       </View>
     </TouchableOpacity>
   );

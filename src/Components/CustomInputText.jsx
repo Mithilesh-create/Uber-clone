@@ -25,7 +25,7 @@ const CustomInputText = (props) => {
             onPress={props.onPressIcon}
             style={styles.inputIcon}
           >
-            <Text style={props.iconStyle}>Show</Text>
+            <Text style={props.iconStyle}>{props.secureTextEntry ? "Show" : "Hide"}</Text>
           </TouchableOpacity>
         ) : null}
       </View>

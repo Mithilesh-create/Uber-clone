@@ -37,40 +37,52 @@ const SignupArea = () => {
     }
   };
   const [showData, setshowData] = useState(true);
+  const [loader, setLoader] = useState(false);
 
   const getUserCollectionRef = collection(db, `/Users`)
 
 
   const handlePress = async () => {
+    setLoader(true);
     if (!FormData.userName) {
       setError((prev) => {
         return { ...prev, userName: "Please enter Username" };
       });
+      setLoader(false);
+      return;
     }
     if (!FormData.email) {
       setError((prev) => {
         return { ...prev, email: "Please enter Email" };
       });
+      setLoader(false);
+      return;
     }
     if (!FormData.firstName) {
       setError((prev) => {
         return { ...prev, firstName: "Please enter First name" };
       });
+      setLoader(false);
+      return;
     }
     if (!FormData.lastName) {
       setError((prev) => {
         return { ...prev, lastName: "Please enter Last name" };
       });
+      setLoader(false);
+      return;
     }
     if (!FormData.password || FormData.password.length < 6) {
       setError((prev) => {
         return { ...prev, password: "Please enter min 6 length Password" };
       });
+      setLoader(false);
+      return;
     }
     try {
       const salt = bcrypt.genSaltSync(10)
       var hashedPassword = bcrypt.hashSync(FormData.password, salt);
-      await addDoc(getUserCollectionRef, {
+      const Success = await addDoc(getUserCollectionRef, {
         Username: FormData.userName,
         Email: FormData.email,
         Firstname: FormData.firstName,
@@ -78,16 +90,21 @@ const SignupArea = () => {
         Password: hashedPassword,
         createdAt: serverTimestamp(),
       })
-      navigation.navigate("Login")
-      setFormData({
-        userName: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-      });
+      if (Success) {
+        setLoader(false);
+        navigation.navigate("Login")
+        setFormData({
+          userName: "",
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+        });
+      }
     } catch (error) {
       console.log(error);
+      setLoader(false);
+      return;
     }
 
   };
@@ -176,6 +193,7 @@ const SignupArea = () => {
           marginBottom: 20,
         }}
         onSubmitData={handlePress}
+        onLoading={loader}
       />
       <View
         style={{

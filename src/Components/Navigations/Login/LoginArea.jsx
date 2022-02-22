@@ -26,6 +26,7 @@ const LoginArea = () => {
   });
   const [ErrorMsg, setError] = useState({})
   const [showData, setshowData] = useState(true);
+  const [loader, setLoader] = useState(false);
   const dispatch = useDispatch();
   const onChangeHandler = (name, value) => {
     setFormData({ ...FormData, [name]: value });
@@ -47,17 +48,20 @@ const LoginArea = () => {
   }
 
   const handlePress = async () => {
+    setLoader(true);
     try {
       if (!FormData.userName) {
         setError((prev) => {
           return { ...prev, userName: "Please enter correct Username" };
         });
+        setLoader(false);
         return
       }
       if (!FormData.password || FormData.password.length < 6) {
         setError((prev) => {
           return { ...prev, password: "Please enter correct Password" };
         });
+        setLoader(false);
         return
       }
       const FireData = await getDataDB();
@@ -67,12 +71,12 @@ const LoginArea = () => {
           ValueFire = e;
         }
       })
-
       var hashedPassword = bcrypt.compareSync(FormData.password, ValueFire?.Password);
       if (hashedPassword) {
         dispatch(setAuthType({
           AuthVal: true
         }))
+        setLoader(false);
         await AsyncStorage.setItem('Auth', JSON.stringify(ValueFire))
         setFormData({
           userName: "",
@@ -82,11 +86,13 @@ const LoginArea = () => {
         setError((prev) => {
           return { ...prev, password: "Please enter correct Password" };
         });
+        setLoader(false);
         return
       }
 
     } catch (e) {
       console.log(e);
+      setLoader(false);
     }
   };
   return (
@@ -148,6 +154,7 @@ const LoginArea = () => {
           marginBottom: 20,
         }}
         onSubmitData={handlePress}
+        onLoading={loader}
       />
       <View
         style={{

@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import { setType } from '../../../../StateSlice/ServiceType';
 import CustomMiddleware from '../../CustomMiddleware';
-import { useEffect } from 'react';
 const MainScreenBtns = (props) => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -22,14 +21,6 @@ const MainScreenBtns = (props) => {
     </TouchableOpacity>)
 }
 const HomePage = () => {
-
-    useEffect(() => {
-        const getDataFunc = async () => {
-            const getData = await AsyncStorage.setItem('Auth')
-            console.log(JSON.parse(getData));
-        }
-        getDataFunc();
-    }, [])
 
     return (
         <CustomMiddleware>
