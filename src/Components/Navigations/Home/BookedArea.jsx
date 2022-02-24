@@ -76,7 +76,7 @@ const SuccessMessage = ({ ride }) => {
                             }}>
                                 <View style={tw`items-center justify-center mx-2`}>
                                     <View style={tw`w-20 h-4/5`}>
-                                        <Image source={{ uri: "https://bit.ly/3fLQEW7" }} resizeMode="contain" style={tw`w-full h-full rounded-full`} />
+                                        <Image source={{ uri: `${ride?.cabIconImg}` }} resizeMode="contain" style={tw`w-full h-full rounded-full`} />
                                     </View>
                                     <View style={{ flex: 1, marginTop: -10 }}>
                                         <Text>{ride?.TimeReq} mins</Text>

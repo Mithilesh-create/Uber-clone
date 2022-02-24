@@ -60,7 +60,6 @@ function PriceArea(props) {
                 fare: data.item?.price
             })
             if (bookedCabId.id) {
-                console.log(data);
                 const RideInfo = {
                     CabNumber: ValueFire?.CabNumber,
                     CabDriver: ValueFire?.Driver,
@@ -71,7 +70,8 @@ function PriceArea(props) {
                     RideType: CabRideType,
                     TimeReq: data.item?.reachtime,
                     Vehicle: ValueFire?.Vehicle,
-                    fare: data.item?.price
+                    fare: data.item?.price,
+                    cabIconImg:data.item?.srcimg
                 }
                 navigation.navigate("Booked", {
                     RideInfo
